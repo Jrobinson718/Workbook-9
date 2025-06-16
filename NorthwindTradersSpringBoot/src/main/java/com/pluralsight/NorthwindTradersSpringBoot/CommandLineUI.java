@@ -26,7 +26,6 @@ public class CommandLineUI implements CommandLineRunner {
 
         while (true){
             System.out.println();
-            System.out.println();
 
             String[] menuOptions = {
                     "List Products",

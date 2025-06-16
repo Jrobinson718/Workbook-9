@@ -3,6 +3,7 @@ package com.pluralsight.NorthwindTradersSpringBoot.data;
 import com.pluralsight.NorthwindTradersSpringBoot.models.Product;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class MySqlProductDAO implements  ProductDAO{
 
     private DatabaseConfig databaseConfig;
@@ -35,20 +37,20 @@ public class MySqlProductDAO implements  ProductDAO{
         bds.setUrl(databaseConfig.getURL());
 
         String query = """
-                select
-                p.productId,
-                p.productName,
-                CategoryName,
-                p.UnitPrice
-                from
-                	products p
-                join
-                	categories c on p.CategoryID = c.CategoryID
-                	""";
+        SELECT
+            p.ProductID,
+            p.ProductName,
+            c.CategoryName,
+            p.UnitPrice
+        FROM
+            products p
+        JOIN
+            categories c ON p.CategoryID = c.CategoryID
+        """;
 
         try (Connection connection = bds.getConnection();
-             PreparedStatement statement = connection.prepareStatement("");
-             ResultSet resultSet = statement.executeQuery(query))
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery())
         {
             while (resultSet.next()) {
                 int productId = resultSet.getInt(1);
