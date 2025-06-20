@@ -30,13 +30,6 @@ public class ProductsController {
         products.add(new Product(4, "Pants", 2, 5.99));
         products.add(new Product(5, "T-Shirt", 2, 5.99));
 
-        for (Product p : products) {
-            if (p.getProductId() == productId) {
-                ArrayList<Product> resultingProducts = new ArrayList<>();
-                resultingProducts.add(p);
-                return resultingProducts;
-            }
-        }
-        return new ArrayList<>();
+        return products.stream().filter(p -> p.getProductId() == productId).toList();
     }
 }
